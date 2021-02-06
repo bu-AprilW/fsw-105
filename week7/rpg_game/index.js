@@ -1,8 +1,8 @@
-const readline = require('readline-sync');
+const readline = require("readline-sync");
 
-const name = readline.question("What is your name?:");
+const name = readline.question("What is your name? ");
 
-readline.question("Hello " + name + " Welcome! This is where your journey begins, and may posssibly end. There are dangers ahead that could be fatal, so be careful and pay attention. Just press any key and hit 'enter' when you are ready to begin. Good luck!")
+readline.question("Hello " + name + " Welcome! This is where your journey begins, and may possibly end. There are dangers ahead that could be fatal, so be careful and pay attention. Just press any key and hit 'enter' when you are ready to begin. Good luck!")
 
 const wildEnemies = ["Evil Wizard", "Mad Hobbit", "Tricky Magician"]
 const rewardItems = ["Food", "Health Potion", "Attack Booster", "Tools"]
@@ -26,7 +26,7 @@ function loop () {
         console.log(name + ": \n" + playerHP + "\n rewardItems: " + spoils)
     } else if (options[index] == "Walk") {
         let key = Math.random()
-        if (key <= .3) {
+        if (key <= .4) {
             console.log("Moving...")
         } else if (key >= .3) {
             console.log(enemy + " is attacking!")
@@ -44,21 +44,21 @@ function loop () {
                             console.log("Success! You got away!")
                             break whileLoop
                         }
-                    case "a":
+                    case 'a':
                         enemyHP -= enemyAttackPow
-                        console.log("You have initiated an attack on " + enemy + " for " + attackPower + " attack power")
+                        console.log("You have initiated an attack on " + enemy + " for: " + attackPower + " attack power")
 
                         playerHP -= enemyAttackPow
                         console.log("Enemy has attacked you for: " + enemyAttackPow + " attack power")
-
+                        
                         if (enemyHP <= 0) {
                             console.log("You have killed " + enemy + ". \n" + enemy + " dropped: " + lostItems + ".")
                             let rewards = Math.random()
                             if (rewards <= .4) {
-                                spoils.push(lostItems) 
+                                spoils.push(lostItems)
                                 console.log(lostItems)
                             } else if (playerHP <= 0) {
-                                console.log("You died! " + enemy + " has defeated you." )
+                                console.log("You died! " + enemy + " has defeated you.")
                             }
                         }
                 }
@@ -72,6 +72,6 @@ while (playerHP > 0) {
         playerActive = true;
         playerHP = 50;
     };
-restorePlayer()
-    loop()
+    restorePlayer()
+        loop()
 };
