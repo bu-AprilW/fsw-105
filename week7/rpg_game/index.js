@@ -2,76 +2,76 @@ const readline = require("readline-sync");
 
 const name = readline.question("What is your name? ");
 
-readline.question("Hello " + name + " Welcome! This is where your journey begins, and may possibly end. There are dangers ahead that could be fatal, so be careful and pay attention. Just press any key and hit 'enter' when you are ready to begin. Good luck!")
+readline.question("Hello " + name + " Welcome! This is where your journey begins, and may possibly end. There are dangers ahead that could be fatal, so be careful and pay attention. Just press any key and hit 'enter' when you are ready to begin. Good luck!");
 
-const wildEnemies = ["Evil Wizard", "Mad Hobbit", "Tricky Magician"]
-const rewardItems = ["Food", "Health Potion", "Attack Booster", "Tools"]
-var spoils = []
-let playerHP = 50
-const options = ["Walk", "Player Info", "Quit"]
-let lostItems = rewardItems[Math.floor(Math.random()*rewardItems.length)];
+const wildEnemies = ["Evil Wizard", "Mad Hobbit", "Tricky Magician"];
+const loot = ["Food", "Health Potion", "Attack Booster"];
+var treasure = [];
+let userHP = 40;
+const options = ["Walk", "Quit", "Print"];
+let pickUp = loot[Math.floor(Math.random()*loot.length)];
 
 
-function loop () {
-    const attackPower = Math.floor(Math.random() * (6 - 2 + 1) + 7)
-    const enemy = wildEnemies[Math.floor(Math.random() * wildEnemies.length)]
-    let enemyHP = 50
-    const enemyAttackPow = Math.floor(Math.random() * (4 - 2 + 1) + 7)
+function game () {
+    const attackPower = Math.floor(Math.random() * (5 - 4 + 3) + 5);
+    const enemy = wildEnemies[Math.floor(Math.random() * wildEnemies.length)];
+    let enemyHP = 40;
+    const enemyAttackPow = Math.floor(Math.random() * (5 - 3 + 2) + 5);
 
-    const index = readline.keyInSelect(options, "Which option would you like to choose?")
+    const index = readline.keyInSelect(options, "Which option would you like to choose?");
 
     if (options[index] == "Quit") {
-        return playerHP = 0;
-    } else if (options[index] == "Player Info") {
-        console.log(name + ": \n" + playerHP + "\n rewardItems: " + spoils)
+        return userHP = 0;
+    } else if (options[index] == "Print") {
+        console.log(name + ":\n" + userHP + "\nloot: " + pickUp);
     } else if (options[index] == "Walk") {
-        let key = Math.random()
-        if (key <= .4) {
-            console.log("Moving...")
+        let key = Math.random();
+        if (key <= .3) {
+            console.log("Walking....");
         } else if (key >= .3) {
-            console.log(enemy + " is attacking!")
-            whileLoop:
-            while (enemyHP > 0 && playerHP > 0) {
+            console.log(enemy + " is approaching.");
+            
+            while (enemyHP > 0 && userHP > 0) {
+                const user = readline.question("What would you like to do? enter 'r' to run away or 'a' to attack:");
 
-                const choose = readline.question("What would you like to do?, enter 'r' to run away or 'a' to attack: ").toLowerCase()
-
-                switch(choose) {
+                switch(user) {
                     case 'r':
-                        const runAway = Math.random()
-                        if (runAway < .6) {
-                            console.log("Before you can escape," + enemy + "attacks you for: ", enemyAttackPow)
-                        } else {
-                            console.log("Success! You got away!")
-                            break whileLoop
+                        const runAway = Math.random();
+                        console.log(runAway);
+                        if (runAway < .5) {
+                            console.log("Before you can run away " + enemy + " attacks you with: " + enemyAttackPow + " attack power");
+                        } else if (runAway > .6) {
+                            console.log("You ran away!");
+                            
                         }
-                    case 'a':
-                        enemyHP -= enemyAttackPow
-                        console.log("You have initiated an attack on " + enemy + " for: " + attackPower + " attack power")
 
-                        playerHP -= enemyAttackPow
-                        console.log("Enemy has attacked you for: " + enemyAttackPow + " attack power")
+                    case 'a':
+                        enemyHP -= enemyAttackPow;
+                        console.log("You attacked " + enemy + " with: " + attackPower + " attack power");
+
+                        userHP -= enemyAttackPow;
+                        console.log("Enemy has attacked you with: " + enemyAttackPow + " attack power");
                         
                         if (enemyHP <= 0) {
-                            console.log("You have killed " + enemy + ". \n" + enemy + " dropped: " + lostItems + ".")
-                            let rewards = Math.random()
-                            if (rewards <= .4) {
-                                spoils.push(lostItems)
-                                console.log(lostItems)
-                            } else if (playerHP <= 0) {
-                                console.log("You died! " + enemy + " has defeated you.")
+                            console.log("You killed " + enemy + ".\n" + enemy + " left: " + pickUp);
+                            let prize = Math.random();
+                            if (prize <= .3) {
+                                treasure.push(pickUp);
                             }
-                        }
+                            } else if (userHP <= 0) {
+                                console.log(enemy + " has defeated you. GAME OVER!");
+                            }
                 }
             }
         }
     }
-};
+}
 
-while (playerHP > 0) {
-    restorePlayer = function() {
-        playerActive = true;
-        playerHP = 50;
+while (userHP > 0) {
+    userRestore = function() {
+        userActive = true;
+        userHP = 40;
     };
-    restorePlayer()
-        loop()
-};
+    userRestore();
+        game();
+}
